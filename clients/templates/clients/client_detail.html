@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Detalles del Cliente</title>
+    <style>
+        /* Estilo para el fondo con el logo */
+        .logo-background {
+            background-image: url("https://i.ibb.co/S74J3fck/logo.jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <div class="logo-background flex flex-col items-center justify-center">
+        <!-- Título de Detalles del Cliente -->
+        <h1 class="text-4xl font-bold text-center mb-8">Detalles de {{ client.user.username }}</h1>
+
+        <!-- Botón para volver al dashboard -->
+        <div class="mb-4">
+            <a href="{% url 'dashboard' %}" class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">
+                Volver al Dashboard
+            </a>
+        </div>
+
+        <!-- Detalles del Cliente -->
+        <div class="bg-gray-800 bg-opacity-75 shadow-md rounded p-6 w-full max-w-4xl mb-6">
+            <div class="grid grid-cols-2 gap-4">
+                <p><span class="font-bold">Teléfono:</span> {{ client.phone }}</p>
+                <p><span class="font-bold">Género:</span> {{ client.get_gender_display }}</p>
+                <p><span class="font-bold">Peso:</span> {{ client.weight }} kg</p>
+                <p><span class="font-bold">Altura:</span> {{ client.height }} cm</p>
+            </div>
+        </div>
+
+        <!-- Sección de Rutinas -->
+        <div class="bg-gray-800 bg-opacity-75 shadow-md rounded p-6 w-full max-w-4xl mb-6">
+            <h2 class="text-2xl font-bold mb-4">Rutinas</h2>
+            <ul class="space-y-2">
+                {% for routine in routines %}
+                <li class="border-b border-gray-600 py-2">
+                    <span class="font-semibold">{{ routine.name }}</span> - {{ routine.description }}
+                </li>
+                {% empty %}
+                <li class="text-gray-400">No hay rutinas asignadas.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Sección de Registro de Actividades -->
+        <div class="bg-gray-800 bg-opacity-75 shadow-md rounded p-6 w-full max-w-4xl">
+            <h2 class="text-2xl font-bold mb-4">Registro de Actividades</h2>
+            <ul class="space-y-2">
+                {% for log in logs %}
+                <li class="border-b border-gray-600 py-2">
+                    <span class="font-semibold">{{ log.date }}</span> - {{ log.activity }}
+                </li>
+                {% empty %}
+                <li class="text-gray-400">No hay actividades registradas.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

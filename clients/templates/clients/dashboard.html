@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Dashboard</title>
+    <style>
+        /* Estilo para el fondo con el logo */
+        .logo-background {
+            background-image: url("https://i.ibb.co/S74J3fck/logo.jpg");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain; /* Ajusta el tamaño del logo */
+            height: 100vh; /* Altura completa de la pantalla */
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <div class="logo-background flex flex-col items-center justify-center">
+        <!-- Título del Dashboard -->
+        <h1 class="text-4xl font-bold text-center mb-8">Dashboard de Clientes</h1>
+
+        <!-- Botón para ir a Pagos Pendientes -->
+        <div class="mb-4">
+            <a href="{% url 'payments' %}" class="bg-blue-500 text-white px-4 py-2 rounded shadow hover:bg-blue-600">
+                Ver Pagos Pendientes
+            </a>
+        </div>
+
+        <!-- Tabla de Clientes -->
+        <div class="bg-gray-800 bg-opacity-75 shadow-md rounded p-4 w-full max-w-4xl">
+            <table class="table-auto w-full text-white">
+                <thead>
+                    <tr class="bg-gray-700">
+                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Teléfono</th>
+                        <th class="px-4 py-2">Género</th>
+                        <th class="px-4 py-2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for client in clients %}
+                    <tr class="border-b border-gray-600">
+                        <td class="px-4 py-2">{{ client.user.username }}</td>
+                        <td class="px-4 py-2">{{ client.phone }}</td>
+                        <td class="px-4 py-2">{{ client.get_gender_display }}</td>
+                        <td class="px-4 py-2">
+                            <a href="{% url 'client_detail' client.pk %}" class="text-blue-400 hover:underline">
+                                Ver Detalles
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-gray-400">No hay clientes registrados.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
